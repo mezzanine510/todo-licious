@@ -1,27 +1,45 @@
 var todos = ['item1', 'item2', 'item3'];
 
-function showTodos() {
-  console.log(todos);
-}
+var todoList = {
+  todos: [],
 
-function addTodo(todo) {
-  todos.push(todo);
-  showTodos();
-}
+  displayTodos: function() {
+    if (this.todos.length === 0) {
+        console.log("Your Todo list is empty!")
+      }
+    else {
+      console.log("Todo List:");
+      for (i = 0; i < this.todos.length; i++) {
+        if (this.todos[i].completed === true) {
+          console.log('(x)', this.todos[i].todoText);
+        } else {
+          console.log('( )', this.todos[i].todoText);
+        }
+      }
+    }
+  },
 
-function changeTodo(index, newValue) {
-  todos[index] = newValue;
-  showTodos();
-}
+  addTodo: function(text) {
+    this.todos.push({
+      todoText: text,
+      completed: false
+    });
+    this.displayTodos();
+  },
 
-function removeTodo(index) {
-  todos.splice(index, 1)
-  showTodos();
-}
+  changeTodo: function(index, text) {
+    // this.todos[index] = text;
+    this.todos[index].todoText = text;
+    this.displayTodos();
+  },
 
-showTodos();
-addTodo('some stuff');
-addTodo('cool beans brah');
-changeTodo(0, 'just a new item');
-changeTodo(1, 'testing this out rofflecopter');
-removeTodo(0);
+  removeTodo: function(index) {
+    this.todos.splice(index, 1);
+    this.displayTodos();
+  },
+
+  toggleCompleted: function(index) {
+    var todo = this.todos[index];
+    todo.completed = !todo.completed;
+  }
+};
