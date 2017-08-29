@@ -1,16 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <link rel="stylesheet" href="css/main.css">
-  <script src="todo-licious.js"></script>
+<html>
 
-  <title>ToDo-licious</title>
-</head>
-<body>
-  <div>HELLO</div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>ToDo-licious</title>
+  </head>
+
+  <body>
+    <h1>ToDo List</h1>
+
+    <div>
+      <button id="displayTodosButton">Display ToDos</button>
+      <button id="toggleAllButton">Toggle All</button>
+    </div>
+      
+    <div>
+      <button id="addTodoButton">Add</button>
+      <input type="text" id="addTodoInput" placeholder="Type a flavorful (?) task here">
+    </div>
+
+    <div>
+      <button id="changeTodoButton">Change</button>
+      <input id="changeTodoPositionInput" type="number">
+      <input id="changeTodoTextInput" type="text">
+    </div>
+
+    <div>
+      <button id="removeTodoButton">Remove</button>
+      <input id="removeTodoPositionInput" type="number">
+    </div>
+
+    <div>
+      <button id="toggleCompletedButton">Completed</button>
+      <input id="toggleCompletedPositionInput" type="number">
+    </div>
+
+    <script src="todo-licious.js"></script>
+  </body>
+
 </html>
