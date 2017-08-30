@@ -1,22 +1,7 @@
+"use strict;"
+
 var todoList = {
   todos: [],
-
-  // Display todos and their completion statuses
-  displayTodos: function() {
-    if (this.todos.length === 0) {
-        console.log("Your Todo list is empty!")
-      }
-    else {
-      console.log("Todo List:");
-      for (var i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].completed === true) {
-          console.log('(x)', this.todos[i].todoText);
-        } else {
-          console.log('( )', this.todos[i].todoText);
-        }
-      }
-    }
-  },
 
   // Add a todo to the list
   addTodo: function(text) {
@@ -24,26 +9,26 @@ var todoList = {
       todoText: text,
       completed: false
     });
-    this.displayTodos();
+    view.displayTodos();
   },
 
   // Change the content of a todo
   changeTodo: function(index, text) {
     this.todos[index].todoText = text;
-    this.displayTodos();
+    view.displayTodos();
   },
 
   // Remove a todo from the list
   removeTodo: function(index) {
     this.todos.splice(index, 1);
-    this.displayTodos();
+    view.displayTodos();
   },
 
   // Toggle the completion status of a single todo
   toggleCompleted: function(index) {
     var todo = this.todos[index];
     todo.completed = !todo.completed;
-    this.displayTodos();
+    view.displayTodos();
   },
 
   // Toggle completion status of all todos
@@ -70,7 +55,29 @@ var todoList = {
       }
     }
 
-    this.displayTodos();
+    view.displayTodos();
+  }
+};
+
+// Object with functions that handle the view
+var view = {
+  // populate todo list by adding li's to the DOM
+  displayTodos: function() {
+    var todosUl = document.getElementById('todosUl');
+    todosUl.innerHTML = '';
+
+    for (var i = 0; i < todoList.todos.length; i++) {
+      var todo = todoList.todos[i];
+      var todoLi = document.createElement('li');
+
+      if (todo.completed === true) {
+        todoLi.textContent = '(x) ' + todo.todoText;
+      } else {
+        todoLi.textContent = '( ) ' + todo.todoText;
+      }
+
+      todosUl.appendChild(todoLi);
+    }
   }
 };
 
@@ -83,10 +90,6 @@ var removeTodoButton = document.getElementById('removeTodoButton');
 var toggleCompletedButton = document.getElementById('toggleCompletedButton');
 
 // Button event listeners that utilize input values
-displayTodosButton.addEventListener('click', function() {
-  todoList.displayTodos();
-});
-
 toggleAllButton.addEventListener('click', function() {
   todoList.toggleAll();
 });
