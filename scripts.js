@@ -1,33 +1,44 @@
-"use strict;"
+"use strict"
 
+// Todo list array and related functions
 var todoList = {
   todos: [],
 
   // Add a todo to the list
-  addTodo: function(text) {
+  addTodo: function() {
+    var textInput = document.getElementById('addTodoInput');
     this.todos.push({
-      todoText: text,
+      todoText: textInput.value,
       completed: false
     });
+    textInput.value = null;
     view.displayTodos();
   },
 
   // Change the content of a todo
-  changeTodo: function(index, text) {
-    this.todos[index].todoText = text;
+  changeTodo: function() {
+    var positionInput = document.getElementById('changeTodoPositionInput');
+    var textInput = document.getElementById('changeTodoTextInput');
+    this.todos[positionInput.value].todoText = textInput.value;
+    positionInput.value = null;
+    textInput.value = null;
     view.displayTodos();
   },
 
   // Remove a todo from the list
-  removeTodo: function(index) {
-    this.todos.splice(index, 1);
+  removeTodo: function() {
+    var positionInput = document.getElementById('removeTodoPositionInput');
+    this.todos.splice(positionInput.value, 1);
+    positionInput.value = null;
     view.displayTodos();
   },
 
   // Toggle the completion status of a single todo
-  toggleCompleted: function(index) {
-    var todo = this.todos[index];
+  toggleCompleted: function() {
+    var positionInput = document.getElementById('toggleCompletedPositionInput');
+    var todo = this.todos[positionInput.value];
     todo.completed = !todo.completed;
+    positionInput.value = null;
     view.displayTodos();
   },
 
@@ -48,7 +59,7 @@ var todoList = {
       for (var i = 0; i < totalTodos; i++) {
         this.todos[i].completed = false;
       }
-    // otherwise, make all of their statuses completed
+    // otherwise, mark all of their statuses complete
     } else {
       for (var i = 0; i < totalTodos; i++) {
         this.todos[i].completed = true;
@@ -59,9 +70,9 @@ var todoList = {
   }
 };
 
-// Object with functions that handle the view
+// Object with functions that handle the DOM view
 var view = {
-  // populate todo list by adding li's to the DOM
+  // populate todo list by adding li's to a ul
   displayTodos: function() {
     var todosUl = document.getElementById('todosUl');
     todosUl.innerHTML = '';
@@ -81,41 +92,16 @@ var view = {
   }
 };
 
-// Assign variables to buttons
-var displayTodosButton = document.getElementById('displayTodosButton');
+// Assign buttons to variables
 var toggleAllButton = document.getElementById('toggleAllButton');
 var addTodoButton = document.getElementById('addTodoButton');
 var changeTodoButton = document.getElementById('changeTodoButton');
 var removeTodoButton = document.getElementById('removeTodoButton');
 var toggleCompletedButton = document.getElementById('toggleCompletedButton');
 
-// Button event listeners that utilize input values
-toggleAllButton.addEventListener('click', function() {
-  todoList.toggleAll();
-});
-
-addTodoButton.addEventListener('click', function() {
-  var addTodoTextInput = document.getElementById('addTodoInput');
-  todoList.addTodo(addTodoTextInput.value);
-  addTodoTextInput.value = null;
-});
-
-changeTodoButton.addEventListener('click', function() {
-  var changeTodoPosition = document.getElementById('changeTodoPositionInput');
-  var changeTodoText = document.getElementById('changeTodoTextInput');
-  todoList.changeTodo(changeTodoPosition.valueAsNumber, changeTodoText.value);
-  changeTodoPosition.value = null;
-  changeTodoText.value = null;
-});
-
-removeTodoButton.addEventListener('click', function() {
-  var removeTodoPosition = document.getElementById('removeTodoPositionInput');
-  todoList.removeTodo(removeTodoPosition.valueAsNumber);
-  removeTodoPosition.value = null;
-});
-
-toggleCompletedButton.addEventListener('click', function() {
-  var toggleCompletedPosition = document.getElementById('toggleCompletedPositionInput');
-  todoList.toggleCompleted(toggleCompletedPosition.valueAsNumber);
-  toggleCompletedPosition.value = null;
-});
+// Set button event listeners
+addTodoButton.addEventListener('click', todoList.addTodo.bind(todoList));
+changeTodoButton.addEventListener('click', todoList.changeTodo.bind(todoList));
+removeTodoButton.addEventListener('click', todoList.removeTodo.bind(todoList));
+toggleCompletedButton.addEventListener('click', todoList.toggleCompleted.bind(todoList));
+toggleAllButton.addEventListener('click', todoList.toggleAll.bind(todoList));
